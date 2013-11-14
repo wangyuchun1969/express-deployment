@@ -30,7 +30,7 @@
 		<maven-resources-plugin.version>2.5</maven-resources-plugin.version>
 		<maven-processor-plugin.version>2.0.5</maven-processor-plugin.version>
 		<maven-build-helper-plugin.version>1.7</maven-build-helper-plugin.version>
-
+		<maven-war-plugin.version>2.3</maven-war-plugin.version>
 		<!-- jetty -->
 		<jetty.version>8.1.11.v20130520</jetty.version>
 
@@ -63,6 +63,7 @@
 				<artifactId>maven-surefire-plugin</artifactId>
 				<version>${maven-surefire-plugin.version}</version>
 				<configuration>
+					<skipTests>true</skipTests>
 					<includes>
 						<include>**/*Test.java</include>
 					</includes>
@@ -72,6 +73,30 @@
 				</configuration>
 			</plugin>
 
+			<!-- Copy static web files before executing gwt:run -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>${maven-war-plugin.version}</version>
+				<configuration>
+					<packagingExcludes>
+						WEB-INF/lib/gwtp-clients-*,
+						WEB-INF/deploy/**
+					</packagingExcludes>
+					<webResources>
+						<resource>
+							<filtering>true</filtering>
+							<directory>src/main/webapp</directory>
+							<includes>
+								<include>**/web.xml</include>
+							</includes>
+						</resource>
+					</webResources>
+					<webappDirectory>${webappDirectory}</webappDirectory>
+					<webXml>src/main/webapp/WEB-INF/web.xml</webXml>
+				</configuration>
+			</plugin>
+			
 			<!-- GWT -->
 			<!-- 'mvn gwt:run' - runs development mode -->
 			<!-- 'mvn gwt:debug' - runs debug mode -->
