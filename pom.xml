@@ -81,6 +81,9 @@
 				<artifactId>maven-war-plugin</artifactId>
 				<version>${maven-war-plugin.version}</version>
 				<configuration>
+				    <archive>
+            			<addMavenDescriptor>false</addMavenDescriptor>
+          			</archive>
 					<packagingExcludes>
 						WEB-INF/lib/gwtp-clients-*,
 						WEB-INF/deploy/**

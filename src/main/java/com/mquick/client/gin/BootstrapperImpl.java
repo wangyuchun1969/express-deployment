@@ -36,7 +36,6 @@ public class BootstrapperImpl implements Bootstrapper {
 
     	    @Override
     	    public void onOpen() {
-    	        socket.send("hello!");
     	    }
     	});    	
     	socket.open();
