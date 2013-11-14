@@ -22,4 +22,16 @@
         <filter-name>guiceFilter</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
+    
+    <servlet>
+    <servlet-name>WS</servlet-name>
+    <servlet-class>com.mquick.server.websocket.PingPongSocket</servlet-class>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+    
+  <servlet-mapping>
+    <servlet-name>WS</servlet-name>
+    <url-pattern>/talk/*</url-pattern>
+  </servlet-mapping>
+    
 </web-app>

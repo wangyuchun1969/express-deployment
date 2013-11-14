@@ -13,7 +13,7 @@
 	<properties>
 		<!-- client -->
 		<gwt.version>2.5.1</gwt.version>
-		<gwtp.version>1.0</gwtp.version>
+		<gwtp.version>1.0.2</gwtp.version>
 		<gin.version>2.0.0</gin.version>
 
 		<!-- server -->
@@ -33,6 +33,8 @@
 		<maven-war-plugin.version>2.3</maven-war-plugin.version>
 		<!-- jetty -->
 		<jetty.version>8.1.11.v20130520</jetty.version>
+		<!-- <jetty.version>9.0.5.v20130815</jetty.version> -->
+
 
 		<target.jdk>1.6</target.jdk>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -63,13 +65,13 @@
 				<artifactId>maven-surefire-plugin</artifactId>
 				<version>${maven-surefire-plugin.version}</version>
 				<configuration>
-					<skipTests>true</skipTests>
 					<includes>
 						<include>**/*Test.java</include>
 					</includes>
 					<excludes>
 						<exclude>**/*GwtTest.java</exclude>
 					</excludes>
+					<skipTests>true</skipTests>
 				</configuration>
 			</plugin>
 
@@ -96,7 +98,7 @@
 					<webXml>src/main/webapp/WEB-INF/web.xml</webXml>
 				</configuration>
 			</plugin>
-			
+
 			<!-- GWT -->
 			<!-- 'mvn gwt:run' - runs development mode -->
 			<!-- 'mvn gwt:debug' - runs debug mode -->
@@ -123,7 +125,7 @@
 					<execution>
 						<goals>
 							<goal>compile</goal>
-							<goal>test</goal>
+							<!-- <goal>test</goal> -->
 						</goals>
 					</execution>
 				</executions>
@@ -131,8 +133,8 @@
 
 			<plugin>
 				<groupId>org.mortbay.jetty</groupId>
-				<artifactId>maven-jetty-plugin</artifactId>
-				<version>6.1.26</version>
+				<artifactId>jetty-maven-plugin</artifactId>
+				<version>${jetty.version}</version>
 				<configuration>
 					<contextPath>/</contextPath>
 				</configuration>
@@ -211,7 +213,23 @@
 			<groupId>org.eclipse.jetty</groupId>
 			<artifactId>jetty-server</artifactId>
 			<version>${jetty.version}</version>
-			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.jetty</groupId>
+			<artifactId>jetty-annotations</artifactId>
+			<version>${jetty.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.jetty</groupId>
+			<artifactId>jetty-websocket</artifactId>
+			<version>${jetty.version}</version>
+		</dependency>
+
+		<!-- websocket -->
+		<dependency>
+			<groupId>com.sksamuel.gwt</groupId>
+			<artifactId>gwt-websockets</artifactId>
+			<version>1.0.3</version>
 		</dependency>
 	</dependencies>
 </project>
