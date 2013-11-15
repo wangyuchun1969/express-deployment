@@ -20,16 +20,19 @@ public class DashboardSocket extends Websocket {
 
 			@Override
 			public void onClose() {
-				// do something on close
+				eventbus.fireEvent(new DashboardEvent(false));
+				// keep it online
+				open();
 			}
 
 			@Override
 			public void onMessage(String msg) {
-				eventbus.fireEvent(new DashboardEvent());
+				eventbus.fireEvent(new DashboardEvent(true));
 			}
 
 			@Override
 			public void onOpen() {
+				eventbus.fireEvent(new DashboardEvent(true));
 			}
 		});
 		open();

@@ -38,13 +38,18 @@ public class HomePageView extends ViewWithUiHandlers<DashboardUiHandlers> implem
 	HTMLPanel pingpong;
 
 	@Override
-	public void onLine() {
+	public void onAlive() {
 		pingpong.getElement().getStyle().setColor("red");
 	}
 
 	@UiHandler("beep")
 	public void onBeepPress(ClickEvent event) {
 		getUiHandlers().beep();
+	}
+
+	@Override
+	public void onDie() {
+		pingpong.getElement().getStyle().setColor("blue");
 	}
 
 }

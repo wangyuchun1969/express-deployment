@@ -33,7 +33,8 @@ public class HomePagePresenter extends
 		Presenter<HomePagePresenter.MyView, HomePagePresenter.MyProxy>
 		implements DashboardUiHandlers {
 	public interface MyView extends View, HasUiHandlers<DashboardUiHandlers> {
-		public void onLine();
+		public void onAlive();
+		public void onDie();
 	}
 
 	@ProxyStandard
@@ -52,7 +53,12 @@ public class HomePagePresenter extends
 
 					@Override
 					public void onAlive() {
-						getView().onLine();
+						getView().onAlive();
+					}
+
+					@Override
+					public void onDie() {
+						getView().onDie();
 					}
 				});
 	}

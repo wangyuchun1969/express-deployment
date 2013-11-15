@@ -7,9 +7,16 @@ public class DashboardEvent extends GwtEvent<DashboardEvent.DashboardEventHandle
 
 	public interface DashboardEventHandler extends EventHandler {
 		public void onAlive();
+		public void onDie();
 	}
 
 	public static Type<DashboardEventHandler> type = new Type<DashboardEventHandler>();
+	
+	private boolean alive;
+	
+	public DashboardEvent(boolean alive) {
+		this.alive = alive;
+	}
 	
 	@Override
 	public Type<DashboardEventHandler> getAssociatedType() {
@@ -18,6 +25,9 @@ public class DashboardEvent extends GwtEvent<DashboardEvent.DashboardEventHandle
 
 	@Override
 	protected void dispatch(DashboardEventHandler handler) {
-		handler.onAlive();
+		if( alive)
+			handler.onAlive();
+		else
+			handler.onDie();
 	}
 }

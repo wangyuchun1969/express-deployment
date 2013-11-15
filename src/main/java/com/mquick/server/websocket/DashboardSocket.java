@@ -1,6 +1,8 @@
 package com.mquick.server.websocket;
 
 import java.io.IOException;
+import java.util.Set;
+import java.util.concurrent.CopyOnWriteArraySet;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -11,6 +13,8 @@ public class DashboardSocket extends WebSocketServlet {
 
 	private static final long serialVersionUID = 2357893930106283048L;
 
+	private Set<DashboardControlSocket> connectedDashboards = new CopyOnWriteArraySet<DashboardControlSocket>();
+	
 	@Override
 	public WebSocket doWebSocketConnect(HttpServletRequest request,
 			String protocol) {
@@ -21,12 +25,12 @@ public class DashboardSocket extends WebSocketServlet {
 
 		@Override
 		public void onOpen(Connection connection) {
+			connectedDashboards.add(this);
 		}
 
 		@Override
 		public void onClose(int closeCode, String message) {
-			// TODO Auto-generated method stub
-			
+			connectedDashboards.remove(this);
 		}
 
 		@Override
