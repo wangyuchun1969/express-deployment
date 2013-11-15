@@ -12,7 +12,7 @@ public class DashboardSocket extends Websocket {
 	
 	@Inject
 	public DashboardSocket(EventBus eventBus) {
-		super("ws://" + Window.Location.getHost() + "/talk/dashboard");
+		super("ws://" + Window.Location.getHost() + Window.Location.getPath() + "talk/dashboard");
 
 		this.eventbus = eventBus;
 

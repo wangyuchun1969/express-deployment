@@ -32,8 +32,8 @@
 		<maven-build-helper-plugin.version>1.7</maven-build-helper-plugin.version>
 		<maven-war-plugin.version>2.3</maven-war-plugin.version>
 		<!-- jetty -->
-		<jetty.version>8.1.11.v20130520</jetty.version>
-		<!-- <jetty.version>9.0.5.v20130815</jetty.version> -->
+		<jetty.version>8.1.14.v20131031</jetty.version>
+		<!-- <jetty.version>9.0.7.v20131107</jetty.version> -->
 
 
 		<target.jdk>1.6</target.jdk>
@@ -85,7 +85,7 @@
             			<addMavenDescriptor>false</addMavenDescriptor>
           			</archive>
 					<packagingExcludes>
-						WEB-INF/lib/gwtp-clients-*,
+						WEB-INF/classes/com/mquick/client/**,
 						WEB-INF/deploy/**
 					</packagingExcludes>
 					<webResources>
@@ -152,6 +152,13 @@
 			<groupId>com.google.gwt</groupId>
 			<artifactId>gwt-user</artifactId>
 			<version>${gwt.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.google.gwt</groupId>
+			<artifactId>gwt-servlet</artifactId>
+			<version>${gwt.version}</version>
+			<scope>runtime</scope>
 		</dependency>
 
 		<!-- GWT-Platform -->
@@ -159,11 +166,13 @@
 			<groupId>com.gwtplatform</groupId>
 			<artifactId>gwtp-mvp-client</artifactId>
 			<version>${gwtp.version}</version>
+			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>com.gwtplatform</groupId>
 			<artifactId>gwtp-dispatch-client</artifactId>
 			<version>${gwtp.version}</version>
+			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>com.gwtplatform</groupId>
@@ -196,6 +205,7 @@
 			<groupId>com.google.gwt.inject</groupId>
 			<artifactId>gin</artifactId>
 			<version>${gin.version}</version>
+			<scope>provided</scope>
 		</dependency>
 
 		<!-- Test -->
@@ -217,16 +227,19 @@
 			<groupId>org.eclipse.jetty</groupId>
 			<artifactId>jetty-server</artifactId>
 			<version>${jetty.version}</version>
+			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.eclipse.jetty</groupId>
 			<artifactId>jetty-annotations</artifactId>
 			<version>${jetty.version}</version>
+			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.eclipse.jetty</groupId>
 			<artifactId>jetty-websocket</artifactId>
 			<version>${jetty.version}</version>
+			<scope>provided</scope>
 		</dependency>
 
 		<!-- websocket -->
@@ -234,6 +247,7 @@
 			<groupId>com.sksamuel.gwt</groupId>
 			<artifactId>gwt-websockets</artifactId>
 			<version>1.0.3</version>
+			<scope>provided</scope>
 		</dependency>
 	</dependencies>
 </project>
