@@ -20,7 +20,4 @@
 	<set-configuration-property name="gin.ginjector.modules"
 		value="com.mquick.client.gin.ClientModule" />
 
-	<set-configuration-property name="gwtp.bootstrapper"
-		value="com.mquick.client.gin.BootstrapperImpl" />
-
 </module>

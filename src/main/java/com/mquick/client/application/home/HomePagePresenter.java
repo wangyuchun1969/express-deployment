@@ -16,27 +16,51 @@
 
 package com.mquick.client.application.home;
 
-import com.mquick.client.application.ApplicationPresenter;
-import com.mquick.client.place.NameTokens;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
+import com.gwtplatform.mvp.client.HasUiHandlers;
 import com.gwtplatform.mvp.client.Presenter;
 import com.gwtplatform.mvp.client.View;
 import com.gwtplatform.mvp.client.annotations.NameToken;
 import com.gwtplatform.mvp.client.annotations.ProxyStandard;
 import com.gwtplatform.mvp.client.proxy.ProxyPlace;
+import com.mquick.client.application.ApplicationPresenter;
+import com.mquick.client.place.NameTokens;
+import com.mquick.client.websocket.DashboardEvent;
+import com.mquick.client.websocket.DashboardSocket;
 
-public class HomePagePresenter extends Presenter<HomePagePresenter.MyView, HomePagePresenter.MyProxy> {
-    public interface MyView extends View {
-    }
+public class HomePagePresenter extends
+		Presenter<HomePagePresenter.MyView, HomePagePresenter.MyProxy>
+		implements DashboardUiHandlers {
+	public interface MyView extends View, HasUiHandlers<DashboardUiHandlers> {
+		public void onLine();
+	}
 
-    @ProxyStandard
-    @NameToken(NameTokens.home)
-    public interface MyProxy extends ProxyPlace<HomePagePresenter> {
-    }
+	@ProxyStandard
+	@NameToken(NameTokens.home)
+	public interface MyProxy extends ProxyPlace<HomePagePresenter> {
+	}
 
-    @Inject
-    public HomePagePresenter(EventBus eventBus, MyView view, MyProxy proxy) {
-        super(eventBus, view, proxy, ApplicationPresenter.SLOT_SetMainContent);
-    }
+	@Inject
+	public HomePagePresenter(EventBus eventBus, MyView view, MyProxy proxy,
+			DashboardSocket socket) {
+		super(eventBus, view, proxy, ApplicationPresenter.SLOT_SetMainContent);
+		getView().setUiHandlers(this);
+		this.socket = socket;
+		eventBus.addHandler(DashboardEvent.type,
+				new DashboardEvent.DashboardEventHandler() {
+
+					@Override
+					public void onAlive() {
+						getView().onLine();
+					}
+				});
+	}
+
+	private DashboardSocket socket;
+
+	@Override
+	public void beep() {
+		socket.send("click me");
+	}
 }

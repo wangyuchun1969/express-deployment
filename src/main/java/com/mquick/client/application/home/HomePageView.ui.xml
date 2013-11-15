@@ -49,8 +49,6 @@
 			<g:SimplePanel>
 				<g:HorizontalPanel ui:field="menuMain">
 					<g:Button ui:field="beep">Beep</g:Button>
-					<g:Button ui:field="soundImmediate">soundImmediate</g:Button>
-					<g:Button ui:field="uuid">UUID</g:Button>
 				</g:HorizontalPanel>
 			</g:SimplePanel>
 		</g:north>

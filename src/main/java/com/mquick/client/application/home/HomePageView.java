@@ -16,24 +16,35 @@
 
 package com.mquick.client.application.home;
 
+import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
-import com.gwtplatform.mvp.client.ViewImpl;
+import com.gwtplatform.mvp.client.ViewWithUiHandlers;
 
-public class HomePageView extends ViewImpl implements HomePagePresenter.MyView {
-    public interface Binder extends UiBinder<Widget, HomePageView> {
-    }
+public class HomePageView extends ViewWithUiHandlers<DashboardUiHandlers> implements HomePagePresenter.MyView {
+	public interface Binder extends UiBinder<Widget, HomePageView> {
+	}
 
-    @Inject
-    public HomePageView(Binder uiBinder) {
-        initWidget(uiBinder.createAndBindUi(this));
-    }
-    
-    
-    @UiField
-    HTMLPanel pingpong;
-    
+	@Inject
+	public HomePageView(Binder uiBinder) {
+		initWidget(uiBinder.createAndBindUi(this));
+	}
+
+	@UiField
+	HTMLPanel pingpong;
+
+	@Override
+	public void onLine() {
+		pingpong.getElement().getStyle().setColor("red");
+	}
+
+	@UiHandler("beep")
+	public void onBeepPress(ClickEvent event) {
+		getUiHandlers().beep();
+	}
+
 }

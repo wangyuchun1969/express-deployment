@@ -16,13 +16,15 @@
 
 package com.mquick.client.gin;
 
-import com.mquick.client.application.ApplicationModule;
-import com.mquick.client.place.NameTokens;
+import com.google.inject.Singleton;
 import com.gwtplatform.mvp.client.annotations.DefaultPlace;
 import com.gwtplatform.mvp.client.annotations.ErrorPlace;
 import com.gwtplatform.mvp.client.annotations.UnauthorizedPlace;
 import com.gwtplatform.mvp.client.gin.AbstractPresenterModule;
 import com.gwtplatform.mvp.client.gin.DefaultModule;
+import com.mquick.client.application.ApplicationModule;
+import com.mquick.client.place.NameTokens;
+import com.mquick.client.websocket.DashboardSocket;
 
 /**
  * See more on setting up the PlaceManager on <a
@@ -38,5 +40,7 @@ public class ClientModule extends AbstractPresenterModule {
         bindConstant().annotatedWith(DefaultPlace.class).to(NameTokens.home);
         bindConstant().annotatedWith(ErrorPlace.class).to(NameTokens.home);
         bindConstant().annotatedWith(UnauthorizedPlace.class).to(NameTokens.home);
+        
+        bind(DashboardSocket.class).in(Singleton.class);
     }
 }
