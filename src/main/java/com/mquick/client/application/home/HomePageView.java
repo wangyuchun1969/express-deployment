@@ -52,4 +52,9 @@ public class HomePageView extends ViewWithUiHandlers<DashboardUiHandlers> implem
 		pingpong.getElement().getStyle().setColor("blue");
 	}
 
+	@Override
+	public void onMessage(String message) {
+		pingpong.getElement().setInnerHTML(message);
+	}
+
 }

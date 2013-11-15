@@ -1,37 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
-    version="2.5">
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	version="2.5">
 
-    <display-name>Project</display-name>
+	<display-name>Project</display-name>
 
-    <welcome-file-list>
-        <welcome-file>Project.html</welcome-file>
-    </welcome-file-list>
+	<welcome-file-list>
+		<welcome-file>Project.html</welcome-file>
+	</welcome-file-list>
 
-    <listener>
-        <listener-class>com.mquick.server.guice.GuiceServletConfig</listener-class>
-    </listener>
+	<listener>
+		<listener-class>com.mquick.server.guice.GuiceServletConfig</listener-class>
+	</listener>
 
-    <filter>
-        <filter-name>guiceFilter</filter-name>
-        <filter-class>com.google.inject.servlet.GuiceFilter</filter-class>
-    </filter>
+	<filter>
+		<filter-name>guiceFilter</filter-name>
+		<filter-class>com.google.inject.servlet.GuiceFilter</filter-class>
+	</filter>
 
-    <filter-mapping>
-        <filter-name>guiceFilter</filter-name>
-        <url-pattern>/*</url-pattern>
-    </filter-mapping>
-    
-    <servlet>
-    <servlet-name>WS</servlet-name>
-    <servlet-class>com.mquick.server.websocket.PingPongSocket</servlet-class>
-    <load-on-startup>1</load-on-startup>
-  </servlet>
-    
-  <servlet-mapping>
-    <servlet-name>WS</servlet-name>
-    <url-pattern>/talk/*</url-pattern>
-  </servlet-mapping>
-    
+	<filter-mapping>
+		<filter-name>guiceFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+	<servlet>
+		<servlet-name>DashboardWebsocket</servlet-name>
+		<servlet-class>com.mquick.server.websocket.DashboardSocket</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>DashboardWebsocket</servlet-name>
+		<url-pattern>/talk/dashboard/*</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>TerminalWebsocket</servlet-name>
+		<servlet-class>com.mquick.server.websocket.PingPongSocket</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>TerminalWebsocket</servlet-name>
+		<url-pattern>/talk/terminal/*</url-pattern>
+	</servlet-mapping>
+
 </web-app>

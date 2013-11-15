@@ -27,7 +27,7 @@ public class DashboardSocket extends Websocket {
 
 			@Override
 			public void onMessage(String msg) {
-				eventbus.fireEvent(new DashboardEvent(true));
+				eventbus.fireEvent(new DashboardEvent(msg));
 			}
 
 			@Override

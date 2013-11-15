@@ -35,6 +35,7 @@ public class HomePagePresenter extends
 	public interface MyView extends View, HasUiHandlers<DashboardUiHandlers> {
 		public void onAlive();
 		public void onDie();
+		public void onMessage(String message);
 	}
 
 	@ProxyStandard
@@ -59,6 +60,11 @@ public class HomePagePresenter extends
 					@Override
 					public void onDie() {
 						getView().onDie();
+					}
+
+					@Override
+					public void onMesage(String message) {
+						getView().onMessage(message);
 					}
 				});
 	}
