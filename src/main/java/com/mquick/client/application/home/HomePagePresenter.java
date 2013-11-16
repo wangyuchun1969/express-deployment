@@ -28,6 +28,7 @@ import com.mquick.client.application.ApplicationPresenter;
 import com.mquick.client.place.NameTokens;
 import com.mquick.client.websocket.DashboardEvent;
 import com.mquick.client.websocket.DashboardSocket;
+import com.mquick.client.websocket.TerminalEvent;
 
 public class HomePagePresenter extends
 		Presenter<HomePagePresenter.MyView, HomePagePresenter.MyProxy>
@@ -36,6 +37,8 @@ public class HomePagePresenter extends
 		public void onAlive();
 		public void onDie();
 		public void onMessage(String message);
+		
+		public void ShowTerminalCount(String message);
 	}
 
 	@ProxyStandard
@@ -63,10 +66,21 @@ public class HomePagePresenter extends
 					}
 
 					@Override
-					public void onMesage(String message) {
+					public void onMessage(String message) {
 						getView().onMessage(message);
 					}
 				});
+		
+		eventBus.addHandler(TerminalEvent.type, new TerminalEvent.TerminalEventHandler() {
+			
+			@Override
+			public void onMessage(String message) {
+				getView().ShowTerminalCount(message);
+				// TODO:
+				// We should poll more detail from service about terminal.
+			}
+			
+		});
 	}
 
 	private DashboardSocket socket;

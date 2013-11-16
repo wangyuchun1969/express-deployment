@@ -57,4 +57,12 @@ public class HomePageView extends ViewWithUiHandlers<DashboardUiHandlers> implem
 		pingpong.getElement().setInnerHTML(message);
 	}
 
+	// Show total count of terminal alive.
+	@UiField
+	HTMLPanel terminal;
+
+	@Override
+	public void ShowTerminalCount(String message) {
+		terminal.getElement().setInnerHTML(message);
+	}
 }

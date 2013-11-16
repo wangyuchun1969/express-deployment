@@ -7,7 +7,7 @@ import com.sksamuel.gwt.websockets.Websocket;
 import com.sksamuel.gwt.websockets.WebsocketListener;
 
 public class DashboardSocket extends Websocket {
-
+	
 	EventBus eventbus;
 	
 	@Inject
@@ -27,7 +27,10 @@ public class DashboardSocket extends Websocket {
 
 			@Override
 			public void onMessage(String msg) {
-				eventbus.fireEvent(new DashboardEvent(msg));
+				if( msg.startsWith("DASHBOARD:"))
+					eventbus.fireEvent(new DashboardEvent(msg.substring(10)));
+				else if( msg.startsWith("TERMINAL:"))
+					eventbus.fireEvent(new TerminalEvent(msg.substring(9)));
 			}
 
 			@Override

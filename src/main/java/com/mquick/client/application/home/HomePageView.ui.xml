@@ -39,9 +39,16 @@
 	<g:DockLayoutPanel ui:field="mainDockPanel">
 		<g:north size="50">
 			<g:SimplePanel styleName="{style.blackTitle}">
-				<g:HorizontalPanel>
+				<g:HorizontalPanel width="100%">
 					<g:HTMLPanel styleName="{style.welcome}">Express Deployment</g:HTMLPanel>
-					<g:HTMLPanel ui:field="pingpong" styleName="{style.pingpong}">PingPong</g:HTMLPanel>
+					<g:HorizontalPanel width="100%">
+						<g:HTMLPanel styleName="{style.pingpong}">Dashboard:</g:HTMLPanel>
+						<g:HTMLPanel ui:field="pingpong" styleName="{style.pingpong}">PingPong</g:HTMLPanel>
+					</g:HorizontalPanel>
+					<g:HorizontalPanel width="100%">
+						<g:HTMLPanel styleName="{style.pingpong}">Terminal:</g:HTMLPanel>
+						<g:HTMLPanel ui:field="terminal" styleName="{style.pingpong}">Terminal</g:HTMLPanel>
+					</g:HorizontalPanel>
 				</g:HorizontalPanel>
 			</g:SimplePanel>
 		</g:north>

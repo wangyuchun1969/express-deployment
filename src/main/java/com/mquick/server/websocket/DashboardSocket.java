@@ -13,7 +13,7 @@ public class DashboardSocket extends WebSocketServlet {
 
 	private static final long serialVersionUID = 2357893930106283048L;
 
-	private Set<DashboardControlSocket> connectedDashboards = new CopyOnWriteArraySet<DashboardControlSocket>();
+	private final static Set<DashboardControlSocket> connectedDashboards = new CopyOnWriteArraySet<DashboardControlSocket>();
 	
 	@Override
 	public WebSocket doWebSocketConnect(HttpServletRequest request,
@@ -21,6 +21,27 @@ public class DashboardSocket extends WebSocketServlet {
 		return new DashboardControlSocket();
 	}
 
+	public void Boardcast(String message) {
+		for( DashboardControlSocket c:connectedDashboards) {
+			try {
+				c.connection.sendMessage("DASHBOARD:"+message);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	public static void BoardcastAboutTerminal(String message) {
+		for( DashboardControlSocket c:connectedDashboards) {
+			try {
+				c.connection.sendMessage("TERMINAL:"+message);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	
 	private class DashboardControlSocket implements WebSocket.OnTextMessage {
 		Connection connection;
 		
@@ -28,26 +49,15 @@ public class DashboardSocket extends WebSocketServlet {
 		public void onOpen(Connection connection) {
 			connectedDashboards.add(this);
 			this.connection = connection;
-			for( DashboardControlSocket c:connectedDashboards) {
-				try {
-					c.connection.sendMessage("[Online:" + connectedDashboards.size() + "]");
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
+			Boardcast("[Online:" + connectedDashboards.size() + "]");
 		}
 
 		@Override
 		public void onClose(int closeCode, String message) {
 			connectedDashboards.remove(this);
-			for( DashboardControlSocket c:connectedDashboards) {
-				try {
-					c.connection.sendMessage("[Online:" + connectedDashboards.size() + "]");
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
+			Boardcast("[Online:" + connectedDashboards.size() + "]");
 		}
+		
 		@Override
 		public void onMessage(String data) {
 			// Echo

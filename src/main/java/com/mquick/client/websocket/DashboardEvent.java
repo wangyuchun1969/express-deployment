@@ -8,7 +8,7 @@ public class DashboardEvent extends GwtEvent<DashboardEvent.DashboardEventHandle
 	public interface DashboardEventHandler extends EventHandler {
 		public void onAlive();
 		public void onDie();
-		public void onMesage(String message);
+		public void onMessage(String message);
 	}
 
 	public static Type<DashboardEventHandler> type = new Type<DashboardEventHandler>();
@@ -34,7 +34,7 @@ public class DashboardEvent extends GwtEvent<DashboardEvent.DashboardEventHandle
 	@Override
 	protected void dispatch(DashboardEventHandler handler) {
 		if( message != null )
-			handler.onMesage(message);
+			handler.onMessage(message);
 		else if( alive)
 			handler.onAlive();
 		else
