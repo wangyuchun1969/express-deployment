@@ -16,8 +16,12 @@
 
 package com.mquick.client.application.home;
 
+import java.util.List;
+
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
+import com.gwtplatform.dispatch.shared.DispatchAsync;
 import com.gwtplatform.mvp.client.HasUiHandlers;
 import com.gwtplatform.mvp.client.Presenter;
 import com.gwtplatform.mvp.client.View;
@@ -29,6 +33,9 @@ import com.mquick.client.place.NameTokens;
 import com.mquick.client.websocket.DashboardEvent;
 import com.mquick.client.websocket.DashboardSocket;
 import com.mquick.client.websocket.TerminalEvent;
+import com.mquick.shared.ClientEntity;
+import com.mquick.shared.ClientListAction;
+import com.mquick.shared.ClientListResults;
 
 public class HomePagePresenter extends
 		Presenter<HomePagePresenter.MyView, HomePagePresenter.MyProxy>
@@ -39,6 +46,7 @@ public class HomePagePresenter extends
 		public void onMessage(String message);
 		
 		public void ShowTerminalCount(String message);
+		public void setClientsData(List<ClientEntity> data);
 	}
 
 	@ProxyStandard
@@ -46,10 +54,14 @@ public class HomePagePresenter extends
 	public interface MyProxy extends ProxyPlace<HomePagePresenter> {
 	}
 
+    private final DispatchAsync dispatcher;
+	
 	@Inject
 	public HomePagePresenter(EventBus eventBus, MyView view, MyProxy proxy,
+			DispatchAsync dispatcher,
 			DashboardSocket socket) {
 		super(eventBus, view, proxy, ApplicationPresenter.SLOT_SetMainContent);
+		this.dispatcher = dispatcher;
 		getView().setUiHandlers(this);
 		this.socket = socket;
 		eventBus.addHandler(DashboardEvent.type,
@@ -78,6 +90,7 @@ public class HomePagePresenter extends
 				getView().ShowTerminalCount(message);
 				// TODO:
 				// We should poll more detail from service about terminal.
+				updateClients();
 			}
 			
 		});
@@ -89,4 +102,27 @@ public class HomePagePresenter extends
 	public void beep() {
 		socket.send("click me");
 	}
+	
+	public void updateClients()  {
+		dispatcher.execute(new ClientListAction(), new AsyncCallback<ClientListResults>(){
+
+			@Override
+			public void onFailure(Throwable caught) {
+				System.out.println("load clients failed");
+			}
+
+			@Override
+			public void onSuccess(ClientListResults result) {
+				List<ClientEntity> list = result.get();
+				if( list != null )
+					getView().setClientsData(list);
+			}});
+	}
+	
+    @Override
+	protected void onReveal() {
+    	super.onReveal();
+    	updateClients();
+    }
+
 }

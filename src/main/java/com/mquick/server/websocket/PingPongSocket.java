@@ -33,22 +33,10 @@ public class PingPongSocket extends WebSocketServlet {
 			// ping it back...
 			try {
 				connection.sendMessage("You said: " + data);
+				DashboardSocket.BoardcastAboutTerminal("terminal show:" + data);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-
-			// talk to ALL registered clients (windows)
-			// for (PingWebSocket ws : connectedClients)
-			// {
-			// try
-			// {
-			// ws.outbound.sendMessage(frame, "You said: " + data);
-			// }
-			// catch (IOException e)
-			// {
-			// e.printStackTrace();
-			// }
-			// }
 		}
 
 		@Override
@@ -64,7 +52,6 @@ public class PingPongSocket extends WebSocketServlet {
 			try {
 				connection.sendMessage("Hello");
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
