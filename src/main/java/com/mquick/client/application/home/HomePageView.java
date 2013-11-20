@@ -16,21 +16,36 @@
 
 package com.mquick.client.application.home;
 
+import java.util.List;
+
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.cellview.client.CellTable;
+import com.google.gwt.user.cellview.client.TextColumn;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Widget;
+import com.google.gwt.view.client.ListDataProvider;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.ViewWithUiHandlers;
+import com.mquick.shared.ClientEntity;
 
 public class HomePageView extends ViewWithUiHandlers<DashboardUiHandlers> implements HomePagePresenter.MyView {
 	public interface Binder extends UiBinder<Widget, HomePageView> {
 	}
 
+	@UiField(provided = true)
+	CellTable<ClientEntity> expressportals;
+	
+	private final ListDataProvider<ClientEntity> dataProvider;
+	
 	@Inject
-	public HomePageView(Binder uiBinder) {
+	public HomePageView(Binder uiBinder, ListDataProvider<ClientEntity> dataProvider) {
+		this.dataProvider = dataProvider;
+		expressportals = new CellTable<ClientEntity>();
+		this.dataProvider.addDataDisplay(expressportals);
+		initCellTable();
 		initWidget(uiBinder.createAndBindUi(this));
 	}
 
@@ -64,5 +79,35 @@ public class HomePageView extends ViewWithUiHandlers<DashboardUiHandlers> implem
 	@Override
 	public void ShowTerminalCount(String message) {
 		terminal.getElement().setInnerHTML(message);
+	}
+	
+    private void initCellTable() {
+        TextColumn<ClientEntity> id_Column = new TextColumn<ClientEntity>() {
+            @Override
+            public String getValue(ClientEntity object) {
+            	if( object == null)
+            		return " ";
+                return object.getId()+"";
+            }
+        };
+        expressportals.addColumn(id_Column, "ID");
+
+        TextColumn<ClientEntity> name_Column = new TextColumn<ClientEntity>() {
+            @Override
+            public String getValue(ClientEntity object) {
+            	if( object == null)
+            		return " ";
+                return object.getName();
+            }
+        };
+        expressportals.addColumn(name_Column, "NAME");
+    
+    }
+
+	@Override
+	public void setClientsData(List<ClientEntity> data) {
+        dataProvider.getList().clear();
+        dataProvider.getList().addAll(data);
+        dataProvider.refresh();
 	}
 }

@@ -17,6 +17,7 @@
 package com.mquick.client.gin;
 
 import com.google.inject.Singleton;
+import com.gwtplatform.dispatch.client.gin.DispatchAsyncModule;
 import com.gwtplatform.mvp.client.annotations.DefaultPlace;
 import com.gwtplatform.mvp.client.annotations.ErrorPlace;
 import com.gwtplatform.mvp.client.annotations.UnauthorizedPlace;
@@ -34,6 +35,7 @@ public class ClientModule extends AbstractPresenterModule {
     @Override
     protected void configure() {
         install(new DefaultModule());
+        install(new DispatchAsyncModule());
         install(new ApplicationModule());
 
         // DefaultPlaceManager Places
