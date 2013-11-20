@@ -54,13 +54,14 @@ public class PingPongSocket extends WebSocketServlet {
 		@Override
 		public void onClose(int arg0, String arg1) {
 			connectedClients.remove(this);
-			DashboardSocket.BoardcastAboutTerminal("terminal leave");
+			DashboardSocket.BoardcastAboutTerminal("Online:" + connectedClients.size());
 		}
 
 		@Override
 		public void onOpen(Connection connection) {
 			this.connection = connection;
-			DashboardSocket.BoardcastAboutTerminal("terminal in:" + connectedClients.size());
+			connectedClients.add(this);
+			DashboardSocket.BoardcastAboutTerminal("Online:" + connectedClients.size());
 			try {
 				connection.sendMessage("Hello");
 			} catch (IOException e) {
