@@ -1,7 +1,11 @@
 package com.mquick.shared;
 
-public class ClientEntity {
-    public Integer getId() {
+import java.io.Serializable;
+
+public class ClientEntity implements Serializable {
+	private static final long serialVersionUID = 1061926354422350601L;
+
+	public Integer getId() {
 		return id;
 	}
 	public void setId(Integer id) {
