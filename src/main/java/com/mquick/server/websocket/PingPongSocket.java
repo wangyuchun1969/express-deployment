@@ -56,7 +56,7 @@ public class PingPongSocket extends WebSocketServlet {
 			ClientEntity c = new ClientEntity();
 			c.setName(connection.toString());
 			c.setMaigcCode(connection.hashCode());
-			ClientEntityList.hlist.put(c, connection);
+			ClientEntityList.hlist.put(connection, c);
 
 			DashboardSocket.BoardcastAboutTerminal("Online:" + connectedClients.size());
 			try {
