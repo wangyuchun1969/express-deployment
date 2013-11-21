@@ -36,6 +36,8 @@ import com.mquick.client.websocket.TerminalEvent;
 import com.mquick.shared.ClientEntity;
 import com.mquick.shared.ClientListAction;
 import com.mquick.shared.ClientListResults;
+import com.mquick.shared.PushTermialResult;
+import com.mquick.shared.PushTerminalAction;
 
 public class HomePagePresenter extends
 		Presenter<HomePagePresenter.MyView, HomePagePresenter.MyProxy>
@@ -47,6 +49,7 @@ public class HomePagePresenter extends
 		
 		public void ShowTerminalCount(String message);
 		public void setClientsData(List<ClientEntity> data);
+		public void Alert(String message);
 	}
 
 	@ProxyStandard
@@ -108,7 +111,7 @@ public class HomePagePresenter extends
 
 			@Override
 			public void onFailure(Throwable caught) {
-				System.out.println("load clients failed");
+				getView().Alert("updateClients failed");
 			}
 
 			@Override
@@ -116,6 +119,7 @@ public class HomePagePresenter extends
 				List<ClientEntity> list = result.get();
 				if( list != null )
 					getView().setClientsData(list);
+					
 			}});
 	}
 	
@@ -125,4 +129,19 @@ public class HomePagePresenter extends
     	updateClients();
     }
 
+	@Override
+	public void pushTerminal(int index, ClientEntity object, String value) {
+		dispatcher.execute(new PushTerminalAction(object),
+				new AsyncCallback<PushTermialResult>() {
+
+					@Override
+					public void onFailure(Throwable caught) {
+						getView().Alert("exec pushTerminal failed" + caught);
+					}
+
+					@Override
+					public void onSuccess(PushTermialResult result) {
+					}
+				});
+	}
 }

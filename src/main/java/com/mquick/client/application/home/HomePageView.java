@@ -20,10 +20,8 @@ import java.util.List;
 
 import com.google.gwt.cell.client.ButtonCell;
 import com.google.gwt.cell.client.FieldUpdater;
-import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.cellview.client.Column;
 import com.google.gwt.user.cellview.client.TextColumn;
@@ -61,11 +59,6 @@ public class HomePageView extends ViewWithUiHandlers<DashboardUiHandlers> implem
 		pingpong.getElement().getStyle().setColor("red");
 	}
 
-	@UiHandler("beep")
-	public void onBeepPress(ClickEvent event) {
-		getUiHandlers().beep();
-	}
-
 	@Override
 	public void onDie() {
 		pingpong.getElement().getStyle().setColor("blue");
@@ -91,7 +84,7 @@ public class HomePageView extends ViewWithUiHandlers<DashboardUiHandlers> implem
             public String getValue(ClientEntity object) {
             	if( object == null)
             		return " ";
-                return object.getId()+"";
+                return object.getMaigcCode()+"";
             }
         };
         expressportals.addColumn(id_Column, "ID");
@@ -120,7 +113,7 @@ public class HomePageView extends ViewWithUiHandlers<DashboardUiHandlers> implem
 
 			@Override
 			public void update(int index, ClientEntity object, String value) {
-				Window.alert("You click me?");
+				getUiHandlers().pushTerminal(index, object, value);
 			}});
         
         expressportals.addColumn(action_Column, "ACTION");        
@@ -132,5 +125,10 @@ public class HomePageView extends ViewWithUiHandlers<DashboardUiHandlers> implem
         dataProvider.getList().clear();
         dataProvider.getList().addAll(data);
         dataProvider.refresh();
+	}
+
+	@Override
+	public void Alert(String message) {
+		Window.alert(message);
 	}
 }

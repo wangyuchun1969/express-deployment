@@ -54,13 +54,6 @@
 				</g:HorizontalPanel>
 			</g:SimplePanel>
 		</g:north>
-		<g:north size="50">
-			<g:SimplePanel>
-				<g:HorizontalPanel ui:field="menuMain">
-					<g:Button ui:field="beep">Beep</g:Button>
-				</g:HorizontalPanel>
-			</g:SimplePanel>
-		</g:north>
 		<g:center>
 			<g:ResizeLayoutPanel ui:field="main" styleName="{style.mainSlot}">
 				<cell:CellTable ui:field="expressportals" width="100%" />

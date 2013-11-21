@@ -18,11 +18,14 @@ package com.mquick.server.guice;
 
 import com.gwtplatform.dispatch.server.guice.HandlerModule;
 import com.mquick.server.terminal.ClientListImpl;
+import com.mquick.server.terminal.PushTerminalImpl;
 import com.mquick.shared.ClientListAction;
+import com.mquick.shared.PushTerminalAction;
 
 public class ServerModule extends HandlerModule {
     @Override
     protected void configureHandlers() {
     	bindHandler(ClientListAction.class, ClientListImpl.class);
+    	bindHandler(PushTerminalAction.class, PushTerminalImpl.class);
     }
 }
