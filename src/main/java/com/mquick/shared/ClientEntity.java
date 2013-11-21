@@ -23,7 +23,7 @@ public class ClientEntity implements Serializable {
 	public void setName(String name) {
 		this.name = name;
 	}
-	private Integer id;
+	private Integer id = 0;
     private String	serial;
     private String	name;
     // TODO: list of all wars.

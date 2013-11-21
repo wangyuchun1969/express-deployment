@@ -63,7 +63,7 @@
 		</g:north>
 		<g:center>
 			<g:ResizeLayoutPanel ui:field="main" styleName="{style.mainSlot}">
-				<cell:CellTable ui:field="expressportals" />
+				<cell:CellTable ui:field="expressportals" width="100%" />
 			</g:ResizeLayoutPanel>
 		</g:center>
 	</g:DockLayoutPanel>

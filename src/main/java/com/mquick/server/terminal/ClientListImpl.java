@@ -12,7 +12,7 @@ public class ClientListImpl implements ActionHandler<ClientListAction, ClientLis
 	public ClientListResults execute(ClientListAction arg0,
 			ExecutionContext arg1) throws ActionException {
 		System.out.println("service load clients");
-		ClientListResults r = new ClientListResults(ClientEntityList.list);
+		ClientListResults r = new ClientListResults(ClientEntityList.getList());
 		return r;
 	}
 

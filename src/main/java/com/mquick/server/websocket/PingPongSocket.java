@@ -36,7 +36,6 @@ public class PingPongSocket extends WebSocketServlet {
 			// ping it back...
 			try {
 				connection.sendMessage("You said: " + data);
-				DashboardSocket.BoardcastAboutTerminal("terminal show:" + data);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -44,6 +43,7 @@ public class PingPongSocket extends WebSocketServlet {
 
 		@Override
 		public void onClose(int arg0, String arg1) {
+			ClientEntityList.hlist.remove(connection);
 			connectedClients.remove(this);
 			DashboardSocket.BoardcastAboutTerminal("Online:" + connectedClients.size());
 		}
@@ -54,9 +54,8 @@ public class PingPongSocket extends WebSocketServlet {
 			connectedClients.add(this);
 
 			ClientEntity c = new ClientEntity();
-			c.setId(0);
 			c.setName(connection.toString());
-			ClientEntityList.list.add(c);
+			ClientEntityList.hlist.put(connection, c);
 
 			DashboardSocket.BoardcastAboutTerminal("Online:" + connectedClients.size());
 			try {

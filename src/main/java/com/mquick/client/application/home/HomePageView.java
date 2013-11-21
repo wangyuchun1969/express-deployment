@@ -18,12 +18,16 @@ package com.mquick.client.application.home;
 
 import java.util.List;
 
+import com.google.gwt.cell.client.ButtonCell;
+import com.google.gwt.cell.client.FieldUpdater;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.cellview.client.CellTable;
+import com.google.gwt.user.cellview.client.Column;
 import com.google.gwt.user.cellview.client.TextColumn;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.view.client.ListDataProvider;
@@ -102,6 +106,25 @@ public class HomePageView extends ViewWithUiHandlers<DashboardUiHandlers> implem
         };
         expressportals.addColumn(name_Column, "NAME");
     
+        ButtonCell buttonCell = new ButtonCell();
+
+        Column<ClientEntity, String> action_Column = new Column<ClientEntity, String>(buttonCell) {
+          @Override
+          public String getValue(ClientEntity object) {
+            // The value to display in the button.
+            return "unimpl"; //object.getName();
+          }
+        };
+        
+        action_Column.setFieldUpdater(new FieldUpdater<ClientEntity, String>(){
+
+			@Override
+			public void update(int index, ClientEntity object, String value) {
+				Window.alert("You click me?");
+			}});
+        
+        expressportals.addColumn(action_Column, "ACTION");        
+        
     }
 
 	@Override
